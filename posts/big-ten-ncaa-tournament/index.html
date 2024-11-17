@@ -245,66 +245,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<pre><code>
-::: {.cell}
-
-```{.r .cell-code}
-library(tidyverse)
-library(gt)
-library(ggalt)
-library(ggtext)
-mbb_team_box &lt;- hoopR::load_mbb_team_box(2023)
-
-regularseason23 &lt;- mbb_team_box %&gt;% filter(game_date &gt; "2022-11-07" &amp; game_date &lt;= "2023-03-12") 
-
-big10 &lt;- c("Nebraska", "Iowa", "Indiana", "Illinois", "Maryland", "Rutgers", "Michigan", "Michigan St", "Ohio State", "Penn State", "Northwestern", "Purdue", "Minnesota", "Wisconsin")
-bigregular &lt;- regularseason23 %&gt;%
-  filter(team_short_display_name %in% big10)
-
-tournament &lt;- c("Maryland", "Illinois", "Indiana", "Iowa", "Michigan St", "Northwestern", "Penn State", "Purdue")
-
-postseason23 &lt;- mbb_team_box %&gt;% filter(game_date &gt; "2023-03-14" &amp; game_date &lt;= "2023-04-03")
-
-bigpost &lt;- postseason23 %&gt;%
-  filter(team_short_display_name %in% tournament)
-
-regularthreepct &lt;- bigregular %&gt;% 
-  group_by(team_short_display_name) %&gt;% 
-  summarise(
-    count = n(),
-    SeasonThreePct = sum(three_point_field_goal_pct),
-    TotalGames = n()
-  ) %&gt;%
-  mutate(
-    ThreePointPct = SeasonThreePct/TotalGames
-  )
-
-ggplot() +
-  geom_bar(data = regularthreepct, aes(x = reorder(team_short_display_name, ThreePointPct), weight = ThreePointPct)) +
-  coord_flip() +
-   labs(
-    x="School", 
-    y="Three Point Percentage", 
-    title="How were Big Ten Teams performing from the Three Point Line?", 
-    subtitle="The conference was led by Michigan State in regular season three point percentage", 
-    caption="Source: hoopR | By Grace Fahleson"
-    )   +             
-  theme_minimal() +
-  theme(
-    title = element_text(color = "black", size = 10, face = "bold"),
-    plot.subtitle = element_text(size = 8),
-    plot.background = element_rect(fill = "white"),
-    axis.text = element_text(size = 8, color = "blue"),
-    plot.title.position = "plot"
-  )</code></pre>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<p>:::</p>
 
 
 
